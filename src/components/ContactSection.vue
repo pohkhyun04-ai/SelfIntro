@@ -1,21 +1,37 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { profile, socials } from '@/data/portfolio'
 import AppIcon from './AppIcon.vue'
 
 const name = ref('')
+const email = ref('')
 const message = ref('')
-const sent = ref(false)
+const status = ref<'idle' | 'sending' | 'sent' | 'error'>('idle')
 
-const mailtoHref = computed(() => {
-  const subject = encodeURIComponent(`Portfolio inquiry from ${name.value || 'a visitor'}`)
-  const body = encodeURIComponent(message.value)
-  return `mailto:${profile.email}?subject=${subject}&body=${body}`
-})
+async function handleSubmit(): Promise<void> {
+  status.value = 'sending'
 
-function handleSubmit(): void {
-  window.location.href = mailtoHref.value
-  sent.value = true
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name.value,
+        email: email.value || null,
+        message: message.value,
+      }),
+    })
+
+    if (!res.ok) throw new Error(`Server responded ${res.status}`)
+
+    status.value = 'sent'
+    name.value = ''
+    email.value = ''
+    message.value = ''
+  } catch (err) {
+    console.error('Contact form submission failed:', err)
+    status.value = 'error'
+  }
 }
 </script>
 
@@ -38,6 +54,18 @@ function handleSubmit(): void {
               class="contact__input"
               placeholder="Jane Doe"
               required
+              :disabled="status === 'sending'"
+            />
+          </label>
+
+          <label class="contact__field">
+            <span class="contact__label">Email (optional)</span>
+            <input
+              v-model="email"
+              type="email"
+              class="contact__input"
+              placeholder="jane@example.com"
+              :disabled="status === 'sending'"
             />
           </label>
 
@@ -49,16 +77,26 @@ function handleSubmit(): void {
               rows="4"
               placeholder="Tell me about your project…"
               required
+              :disabled="status === 'sending'"
             ></textarea>
           </label>
 
-          <button type="submit" class="btn btn--primary contact__submit">
-            Send message
+          <button
+            type="submit"
+            class="btn btn--primary contact__submit"
+            :disabled="status === 'sending'"
+          >
+            <template v-if="status === 'sending'">Sending…</template>
+            <template v-else>Send message</template>
             <AppIcon name="mail" :size="18" />
           </button>
 
-          <p v-if="sent" class="contact__note">
-            Thanks! Your email client should open with your message ready to send.
+          <p v-if="status === 'sent'" class="contact__note contact__note--ok">
+            Thank you! Your message has been saved. I'll get back to you soon.
+          </p>
+
+          <p v-if="status === 'error'" class="contact__note contact__note--err">
+            Something went wrong. Please try again or email me directly.
           </p>
         </form>
       </div>
@@ -153,8 +191,15 @@ function handleSubmit(): void {
 }
 
 .contact__note {
-  color: var(--color-success);
   font-size: var(--fs-sm);
+}
+
+.contact__note--ok {
+  color: var(--color-success);
+}
+
+.contact__note--err {
+  color: var(--color-danger);
 }
 
 .contact__aside {

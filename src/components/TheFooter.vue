@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { profile, navLinks, socials } from '@/data/portfolio'
+import { useAdmin } from '@/composables/useAdmin'
 import AppIcon from './AppIcon.vue'
 
+const { openAdmin } = useAdmin()
 const year = new Date().getFullYear()
 </script>
 
@@ -37,6 +39,7 @@ const year = new Date().getFullYear()
     <div class="container footer__bottom">
       <p>© {{ year }} {{ profile.name }}. All rights reserved.</p>
       <p>Built with Vue 3, TypeScript & CSS.</p>
+      <button class="footer__admin-link" @click="openAdmin">Admin</button>
     </div>
   </footer>
 </template>
@@ -116,6 +119,22 @@ const year = new Date().getFullYear()
   border-top: 1px solid var(--color-border);
   color: var(--color-text-muted);
   font-size: var(--fs-sm);
+}
+
+.footer__admin-link {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-family: inherit;
+  font-size: var(--fs-xs);
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity var(--transition-fast);
+}
+
+.footer__admin-link:hover {
+  opacity: 1;
+  color: var(--color-primary);
 }
 
 @media (max-width: 768px) {
