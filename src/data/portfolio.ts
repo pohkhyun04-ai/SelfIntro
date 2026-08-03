@@ -85,6 +85,7 @@ export const skills: Skill[] = [
   { name: "JavaScript", level: 60 },
   { name: "Vue.js", level: 52 },
   { name: "Python", level: 65 },
+  { name: "Java", level: 68 },
   { name: "C#", level: 68 },
   { name: "C++", level: 65 },
   { name: "MySQL", level: 72 },
@@ -108,28 +109,13 @@ export const projects: Project[] = [
     repo: "https://github.com",
   },
   {
-    title: "Orbit Task Manager",
+    title: "Self Intro Website",
     description:
-      "A collaborative task manager with offline-first sync and a keyboard-driven interface.",
-    tags: ["React", "IndexedDB", "PWA"],
+      "A personal introduction website to showcase my skills and projects.",
+    tags: ["HTML", "Vue.js", "JavaScript", "TypeScript"],
     link: "https://example.com",
-    repo: "https://github.com",
-  },
-  {
-    title: "Palette UI",
-    description:
-      "An open-source component library and design-token system used by 3k+ developers.",
-    tags: ["Design System", "CSS", "Accessibility"],
-    link: "https://example.com",
-    repo: "https://github.com",
-  },
-  {
-    title: "DevFlow CLI",
-    description:
-      "A developer toolchain that automates release notes, changelogs, and version bumps.",
-    tags: ["Node.js", "CLI", "Automation"],
-    repo: "https://github.com",
-  },
+    repo: "https://github.com/pohkhyun04-ai/SelfIntro.git",
+  }
 ];
 
 export const experience: ExperienceItem[] = [
