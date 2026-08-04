@@ -1,15 +1,19 @@
+-- SQLite version of the portfolio schema.
+-- This file is kept for reference; the actual schema is applied
+-- from db.ts using better-sqlite3 at startup.
+
 CREATE TABLE IF NOT EXISTS contacts (
-  id          INT AUTO_INCREMENT PRIMARY KEY,
-  name        VARCHAR(255) NOT NULL,
-  email       VARCHAR(255),
-  message     TEXT         NOT NULL,
-  created_at  TIMESTAMP    DEFAULT CURRENT_TIMESTAMP
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  name        TEXT NOT NULL,
+  email       TEXT,
+  message     TEXT NOT NULL,
+  created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS site_assets (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  asset_key VARCHAR(50) NOT NULL UNIQUE,   -- e.g., 'chatbot_avatar'
-  mime_type VARCHAR(50) NOT NULL,           -- e.g., 'image/png'
-  data LONGBLOB NOT NULL,                   -- raw binary bytes
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  asset_key   TEXT NOT NULL UNIQUE,
+  mime_type   TEXT NOT NULL,
+  data        BLOB NOT NULL,
+  updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

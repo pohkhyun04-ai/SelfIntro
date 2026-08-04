@@ -1,0 +1,26 @@
+# Render Blueprint — defines how to deploy this project on Render.
+# Free tier: 750 hours/month, 512 MB RAM, sleeps after 15 min inactivity.
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: portfolio
+    env: node
+    region: singapore                    # closest to Malaysia
+    plan: free
+    buildCommand: |
+      npm install
+      npx vite build
+      cd server && npm install && npm run build
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true             # auto-generated, 32-char random string
+      - key: ADMIN_USER
+        value: qia
+      - key: ADMIN_PASSWORD
+        value: "123123"
+      - key: GEMINI_API_KEY
+        sync: false                     # set this manually in Render dashboard

@@ -1,7 +1,6 @@
 import { Router, type Request, type Response } from "express";
-import type { RowDataPacket } from "mysql2";
 import { authMiddleware } from "../middleware/auth.js";
-import pool from "../db.js";
+import db from "../db.js";
 
 const router = Router();
 
@@ -10,9 +9,23 @@ router.use(authMiddleware);
 
 router.get("/contacts", async (_req: Request, res: Response): Promise<void> => {
   try {
-    const [rows] = await pool.execute<RowDataPacket[]>(
+    const results = db.exec(
       "SELECT id, name, email, message, created_at FROM contacts ORDER BY created_at DESC",
     );
+
+    if (results.length === 0) {
+      res.json([]);
+      return;
+    }
+
+    const { columns, values } = results[0];
+    const rows = values.map((row: unknown[]) => {
+      const obj: Record<string, unknown> = {};
+      columns.forEach((col: string, i: number) => {
+        obj[col] = row[i];
+      });
+      return obj;
+    });
 
     res.json(rows);
   } catch (err) {

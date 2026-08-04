@@ -1,6 +1,5 @@
 import { Router, type Request, type Response } from "express";
-import type { ResultSetHeader } from "mysql2";
-import pool from "../db.js";
+import db, { saveDb } from "../db.js";
 
 const router = Router();
 
@@ -13,12 +12,18 @@ router.post("/contact", async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const [result] = await pool.execute<ResultSetHeader>(
+    db.run(
       "INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)",
       [name, email ?? null, message],
     );
 
-    res.status(201).json({ success: true, id: result.insertId });
+    // Retrieve the auto-generated id
+    const idResult = db.exec("SELECT last_insert_rowid()");
+    const insertId = idResult[0].values[0][0] as number;
+
+    saveDb();
+
+    res.status(201).json({ success: true, id: insertId });
   } catch (err) {
     console.error("Failed to save contact message:", err);
     res.status(500).json({ error: "Internal server error." });

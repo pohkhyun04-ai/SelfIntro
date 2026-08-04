@@ -1,8 +1,7 @@
 import { Router, type Request, type Response } from "express";
 import multer from "multer";
 import { authMiddleware } from "../middleware/auth.js";
-import pool from "../db.js";
-import type { ResultSetHeader } from "mysql2";
+import db, { saveDb } from "../db.js";
 
 const router = Router();
 
@@ -15,21 +14,21 @@ const upload = multer({
 // GET /api/avatar  (public — anyone can fetch the avatar)
 router.get("/avatar", async (_req: Request, res: Response): Promise<void> => {
   try {
-    const [rows] = await pool.execute<any[]>(
-      "SELECT mime_type, data FROM site_assets WHERE asset_key = 'chatbot_avatar'"
+    const results = db.exec(
+      "SELECT mime_type, data FROM site_assets WHERE asset_key = 'chatbot_avatar'",
     );
 
-    if (rows.length === 0) {
+    if (results.length === 0 || results[0].values.length === 0) {
       res.status(404).json({ error: "No avatar found." });
       return;
     }
 
-    const { mime_type, data } = rows[0];
+    const [mime_type, data] = results[0].values[0];
 
     // Tell the browser this is an image
-    res.setHeader("Content-Type", mime_type);
+    res.setHeader("Content-Type", mime_type as string);
     res.setHeader("Cache-Control", "public, max-age=3600"); // cache 1 hour
-    res.send(data); // send raw bytes
+    res.send(Buffer.from(data as Uint8Array)); // send raw bytes
   } catch (err) {
     console.error("[assets] fetch error:", err);
     res.status(500).json({ error: "Failed to fetch avatar." });
@@ -40,7 +39,7 @@ router.get("/avatar", async (_req: Request, res: Response): Promise<void> => {
 router.post(
   "/assets/avatar",
   authMiddleware,
-  upload.single("file"),      // "file" is the form field name
+  upload.single("file"), // "file" is the form field name
   async (req: Request, res: Response): Promise<void> => {
     try {
       const file = req.file;
@@ -55,20 +54,25 @@ router.post(
         return;
       }
 
-      // UPSERT: insert or update the chatbot_avatar row
-      await pool.execute<ResultSetHeader>(
+      // UPSERT: INSERT OR REPLACE via ON CONFLICT (SQLite syntax)
+      db.run(
         `INSERT INTO site_assets (asset_key, mime_type, data)
          VALUES ('chatbot_avatar', ?, ?)
-         ON DUPLICATE KEY UPDATE mime_type = VALUES(mime_type), data = VALUES(data)`,
-        [file.mimetype, file.buffer]
+         ON CONFLICT(asset_key) DO UPDATE SET
+           mime_type = excluded.mime_type,
+           data      = excluded.data,
+           updated_at = CURRENT_TIMESTAMP`,
+        [file.mimetype, file.buffer],
       );
+
+      saveDb();
 
       res.json({ success: true, message: "Avatar uploaded." });
     } catch (err) {
       console.error("[assets] upload error:", err);
       res.status(500).json({ error: "Upload failed." });
     }
-  }
+  },
 );
 
 export default router;

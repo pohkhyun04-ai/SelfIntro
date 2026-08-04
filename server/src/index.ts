@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import contactRouter from "./routes/contact.js";
 import authRouter from "./routes/auth.js";
 import contactsRouter from "./routes/contacts.js";
@@ -10,7 +12,8 @@ import assetsRouter from "./routes/assets.js";
 dotenv.config();
 
 const app = express();
-const PORT = Number(process.env.SERVER_PORT) || 3001;
+// Render sets PORT automatically; SERVER_PORT is a fallback for local dev
+const PORT = Number(process.env.PORT) || Number(process.env.SERVER_PORT) || 3001;
 
 // ---- middleware ----
 app.use(cors());
@@ -29,6 +32,23 @@ app.get("/api/health", (_req, res) => {
 });
 
 app.use("/api", contactsRouter);  // GET  /api/contacts (protected)
+
+// ---- serve frontend in production ----
+if (process.env.NODE_ENV === "production") {
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  // In dev (tsx): __dirname = server/src/  → ../../dist = project-root/dist/
+  // In prod (tsc): __dirname = server/dist/ → ../../dist = project-root/dist/
+  const clientDist = path.resolve(__dirname, "../../dist");
+
+  // Serve static assets (JS, CSS, images, etc.)
+  app.use(express.static(clientDist));
+
+  // SPA fallback — return index.html for any route that isn't /api/*
+  app.get("*", (req, res, next) => {
+    if (req.path.startsWith("/api")) return next();
+    res.sendFile(path.join(clientDist, "index.html"));
+  });
+}
 
 // ---- start ----
 app.listen(PORT, () => {
