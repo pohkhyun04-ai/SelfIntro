@@ -67,7 +67,7 @@ async function handleSubmit(): Promise<void> {
               v-model="email"
               type="email"
               class="contact__input"
-              :placeholder="t('contact.emailPlaceholder')"
+              :placeholder="t('contact.emailPlaceholder', { at: '@' })"
               :disabled="status === 'sending'"
             />
           </label>

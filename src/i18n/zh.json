@@ -53,7 +53,7 @@
     "nameLabel": "你的名字",
     "namePlaceholder": "张三",
     "emailLabel": "邮箱（可选）",
-    "emailPlaceholder": "zhangsan@example.com",
+    "emailPlaceholder": "zhangsan{at}example.com",
     "messageLabel": "消息",
     "messagePlaceholder": "告诉我你的项目…",
     "sending": "发送中…",

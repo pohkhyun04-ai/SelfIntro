@@ -53,7 +53,7 @@
     "nameLabel": "Your name",
     "namePlaceholder": "Jane Doe",
     "emailLabel": "Email (optional)",
-    "emailPlaceholder": "jane@example.com",
+    "emailPlaceholder": "jane{at}example.com",
     "messageLabel": "Message",
     "messagePlaceholder": "Tell me about your project…",
     "sending": "Sending…",
