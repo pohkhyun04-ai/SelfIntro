@@ -7,6 +7,8 @@
 export interface NavLink {
   label: string;
   href: string;
+  /** i18n key under "nav." prefix, e.g. "about", "skills" */
+  i18nKey: string;
 }
 
 export interface SocialLink {
@@ -66,11 +68,11 @@ summary:
 };
 
 export const navLinks: NavLink[] = [
-  { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
-  { label: "Experience", href: "#experience" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "#about", i18nKey: "about" },
+  { label: "Skills", href: "#skills", i18nKey: "skills" },
+  { label: "Projects", href: "#projects", i18nKey: "projects" },
+  { label: "Experience", href: "#experience", i18nKey: "experience" },
+  { label: "Contact", href: "#contact", i18nKey: "contact" },
 ];
 
 export const socials: SocialLink[] = [
@@ -129,7 +131,7 @@ export const experience: ExperienceItem[] = [
   {
     role: "Full Stack Engineer Intern",
     company: "Flexinfra AI Sdn Bhd",
-    period: "15 June - 29 November 2026",
+    period: "15 June - 29 November 2026 (6 months)",
     description:
       "Worked on the Flextoken AI platform by developing frontend and backend features, improving user interfaces, integrating APIs, designing system architecture diagrams, writing technical documentation, and assisting with Docker-based deployment and testing.",
   }

@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { skills } from '@/data/portfolio'
-import AppIcon from './AppIcon.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 </script>
 
 <template>
   <section id="skills" class="section skills">
     <div class="container">
-      <span class="section__eyebrow">Skills</span>
-      <h2 class="section__title">Tools I work with</h2>
+      <span class="section__eyebrow">{{ t('skills.eyebrow') }}</span>
+      <h2 class="section__title">{{ t('skills.title') }}</h2>
       <p class="section__subtitle">
-        Collecting tech stacks like Pokémon.
+        {{ t('skills.subtitle') }}
       </p>
 
       <div class="skills__grid">
@@ -26,7 +28,7 @@ import AppIcon from './AppIcon.vue'
               :aria-valuenow="skill.level"
               aria-valuemin="0"
               aria-valuemax="100"
-              :aria-label="`${skill.name} proficiency`"
+              :aria-label="t('skills.ariaProficiency', { skill: skill.name })"
             ></div>
           </div>
         </div>

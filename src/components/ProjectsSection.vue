@@ -1,30 +1,42 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { projects } from '@/data/portfolio'
+import { useI18n } from 'vue-i18n'
 import AppIcon from './AppIcon.vue'
+
+const { t } = useI18n()
+
+// Map portfolio projects to use translated descriptions
+const translatedProjects = computed(() =>
+  projects.map((p, i) => ({
+    ...p,
+    description: t(`content.project${i}.description`),
+  }))
+)
 </script>
 
 <template>
   <section id="projects" class="section">
     <div class="container">
-      <span class="section__eyebrow">Projects</span>
-      <h2 class="section__title">Selected work</h2>
+      <span class="section__eyebrow">{{ t('projects.eyebrow') }}</span>
+      <h2 class="section__title">{{ t('projects.title') }}</h2>
       <p class="section__subtitle">
-        A showcase of projects that reflect my journey from student to software engineer.
+        {{ t('projects.subtitle') }}
       </p>
 
       <div class="projects__grid">
-        <article v-for="project in projects" :key="project.title" class="project-card">
+        <article v-for="project in translatedProjects" :key="project.title" class="project-card">
           <div class="project-card__top">
             <span class="project-card__icon">
               <AppIcon name="code" :size="20" />
             </span>
             <div class="project-card__links">
               <a v-if="project.repo" :href="project.repo" class="project-card__link" target="_blank"
-                rel="noopener noreferrer" aria-label="Source code">
+                rel="noopener noreferrer" :aria-label="t('projects.ariaSource')">
                 <AppIcon name="github" :size="18" />
               </a>
               <a v-if="project.link" :href="project.link" class="project-card__link" target="_blank"
-                rel="noopener noreferrer" aria-label="Live demo">
+                rel="noopener noreferrer" :aria-label="t('projects.ariaDemo')">
                 <AppIcon name="external" :size="18" />
               </a>
             </div>

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useAdmin } from "@/composables/useAdmin";
+import { useI18n } from "vue-i18n";
 import AppIcon from "./AppIcon.vue";
 
+const { t } = useI18n();
 const { login } = useAdmin();
 
 const username = ref("");
@@ -27,13 +29,13 @@ async function handleLogin(): Promise<void> {
     const data = await res.json();
 
     if (!res.ok) {
-      error.value = data.error || "Login failed.";
+      error.value = data.error || t('admin.loginFailed');
       return;
     }
 
     login(data.token);
   } catch {
-    error.value = "Network error. Is the server running?";
+    error.value = t('admin.networkError');
   } finally {
     loading.value = false;
   }
@@ -46,15 +48,15 @@ async function handleLogin(): Promise<void> {
       <div class="admin-login__icon">
         <AppIcon name="code" :size="28" />
       </div>
-      <h2 class="admin-login__title">Admin Portal</h2>
+      <h2 class="admin-login__title">{{ t('admin.portal') }}</h2>
 
       <label class="admin-login__field">
-        <span class="admin-login__label">Username</span>
+        <span class="admin-login__label">{{ t('admin.username') }}</span>
         <input
           v-model="username"
           type="text"
           class="admin-login__input"
-          placeholder="Enter username"
+          :placeholder="t('admin.usernamePlaceholder')"
           required
           :disabled="loading"
           autocomplete="username"
@@ -62,12 +64,12 @@ async function handleLogin(): Promise<void> {
       </label>
 
       <label class="admin-login__field">
-        <span class="admin-login__label">Password</span>
+        <span class="admin-login__label">{{ t('admin.password') }}</span>
         <input
           v-model="password"
           type="password"
           class="admin-login__input"
-          placeholder="Enter password"
+          :placeholder="t('admin.passwordPlaceholder')"
           required
           :disabled="loading"
           autocomplete="current-password"
@@ -81,7 +83,7 @@ async function handleLogin(): Promise<void> {
         class="btn btn--primary admin-login__submit"
         :disabled="loading"
       >
-        {{ loading ? "Signing in…" : "Sign in" }}
+        {{ loading ? t('admin.signingIn') : t('admin.signIn') }}
       </button>
     </form>
   </div>

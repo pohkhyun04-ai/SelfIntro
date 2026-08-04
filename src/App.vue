@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useAdmin } from '@/composables/useAdmin'
+import { useI18n } from 'vue-i18n'
 import AdminLogin from '@/components/AdminLogin.vue'
 import AdminDashboard from '@/components/AdminDashboard.vue'
 import ChatBot from '@/components/ChatBot.vue'
@@ -12,6 +13,7 @@ import ExperienceSection from '@/components/ExperienceSection.vue'
 import ContactSection from '@/components/ContactSection.vue'
 import TheFooter from '@/components/TheFooter.vue'
 
+const { t } = useI18n()
 const { isLoggedIn, showAdmin } = useAdmin()
 </script>
 
@@ -20,7 +22,7 @@ const { isLoggedIn, showAdmin } = useAdmin()
   <template v-if="showAdmin">
     <div class="admin-bar">
       <button class="admin-bar__back" @click="showAdmin = false">
-        ← Back to Portfolio
+        {{ t('admin.backToPortfolio') }}
       </button>
     </div>
     <AdminLogin v-if="!isLoggedIn" />

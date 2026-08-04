@@ -1,0 +1,136 @@
+{
+  "nav": {
+    "about": "关于",
+    "skills": "技能",
+    "projects": "项目",
+    "experience": "经验",
+    "contact": "联系"
+  },
+  "hero": {
+    "available": "开放新机会",
+    "greeting": "你好，我是 {name}。",
+    "role": "我是一名 {role}。",
+    "viewWork": "查看作品",
+    "getInTouch": "联系我",
+    "like": "点赞",
+    "liked": "已赞！",
+    "visits": "{count} 次访问",
+    "ariaAlreadyLiked": "已经点赞",
+    "ariaLikePage": "点赞此页面",
+    "ariaClickToCopy": "点击复制链接"
+  },
+  "about": {
+    "eyebrow": "关于",
+    "title": "关于我",
+    "hobbies": "爱好：",
+    "stats": {
+      "curiosity": "好奇心",
+      "learning": "学习",
+      "mbti": "MBTI"
+    }
+  },
+  "skills": {
+    "eyebrow": "技能",
+    "title": "我使用的工具",
+    "subtitle": "像收集宝可梦一样收集技术栈。",
+    "ariaProficiency": "{skill} 熟练度"
+  },
+  "projects": {
+    "eyebrow": "项目",
+    "title": "精选作品",
+    "subtitle": "展示我从学生到软件工程师的成长历程。",
+    "ariaSource": "源代码",
+    "ariaDemo": "在线演示"
+  },
+  "experience": {
+    "eyebrow": "经验",
+    "title": "我的工作经历"
+  },
+  "contact": {
+    "eyebrow": "联系",
+    "title": "让我们一起创造",
+    "subtitle": "有项目想法或者只是想打个招呼？我的收件箱始终开放。",
+    "nameLabel": "你的名字",
+    "namePlaceholder": "张三",
+    "emailLabel": "邮箱（可选）",
+    "emailPlaceholder": "zhangsan@example.com",
+    "messageLabel": "消息",
+    "messagePlaceholder": "告诉我你的项目…",
+    "sending": "发送中…",
+    "send": "发送消息",
+    "success": "谢谢！你的消息已保存。我会尽快回复你。",
+    "error": "出了点问题。请重试或直接发邮件给我。"
+  },
+  "footer": {
+    "rights": "保留所有权利。",
+    "builtWith": "使用 Vue 3、TypeScript、Express 和 PostgreSQL 构建。",
+    "admin": "管理"
+  },
+  "chatbot": {
+    "title": "Qia的AI助手",
+    "subtitle": "随便问我任何问题！",
+    "ariaOpen": "打开聊天",
+    "ariaClose": "关闭聊天",
+    "ariaCloseBtn": "关闭",
+    "ariaSend": "发送",
+    "faqTitle": "常见问题",
+    "placeholder": "输入消息…"
+  },
+  "admin": {
+    "backToPortfolio": "← 返回作品集",
+    "portal": "管理后台",
+    "username": "用户名",
+    "usernamePlaceholder": "输入用户名",
+    "password": "密码",
+    "passwordPlaceholder": "输入密码",
+    "signIn": "登录",
+    "signingIn": "登录中…",
+    "loginFailed": "登录失败。",
+    "networkError": "网络错误。服务器是否在运行？",
+    "logout": "退出",
+    "contactMessages": "联系人消息",
+    "chatbotAvatar": "聊天机器人头像",
+    "avatarDesc": "此图片显示在聊天气泡的头部。使用正方形照片或图标以获得最佳效果。",
+    "chooseImage": "选择图片",
+    "uploadAvatar": "上传头像",
+    "uploading": "上传中…",
+    "avatarUpdated": "头像已更新！",
+    "uploadFailed": "上传失败",
+    "loading": "加载中…",
+    "loadFailed": "加载联系人失败。",
+    "noMessages": "暂无消息。",
+    "refresh": "刷新",
+    "tableHeaders": {
+      "id": "#",
+      "name": "姓名",
+      "email": "邮箱",
+      "message": "消息",
+      "date": "日期"
+    }
+  },
+  "lang": {
+    "label": "中文",
+    "switchTo": "English"
+  },
+  "content": {
+    "profile": {
+      "tagline": "由好奇心和 Ctrl + Z 驱动。",
+      "role": "软件工程师应届毕业生",
+      "summary": "我是一名来自沙巴的软件工程毕业生，怀揣着一个梦想——在吉隆坡建立自己的事业、生活，并有一天拥有自己的家。我热爱创建网站、改进现有功能，并将新想法转化为实际产品。天性好奇，我一直在学习新技术，并渴望为有意义的实际项目做出贡献。"
+    },
+    "aboutStats": {
+      "curiosityValue": "100%",
+      "learningValue": "永不止步",
+      "mbtiValue": "ENFJ / INFJ"
+    },
+    "project0": {
+      "description": "一个用于浏览、购买和管理纯种宠物的全栈Web应用程序。客户可以搜索宠物、预约和购买宠物。管理员通过综合仪表板管理宠物、预约、库存、销售报告和配送员。系统还集成了基于ResNet50深度学习模型的AI宠物品种识别功能。"
+    },
+    "project1": {
+      "description": "一个展示我技能和项目的个人介绍网站。"
+    },
+    "experience0": {
+      "description": "在Flextoken AI平台工作，负责开发前后端功能、改进用户界面、集成API、设计系统架构图、编写技术文档，并协助基于Docker的部署和测试。"
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "experience": "Experience",
+    "contact": "Contact"
+  },
+  "hero": {
+    "available": "Available for new opportunities",
+    "greeting": "Hi, I'm {name}.",
+    "role": "I'm a {role}.",
+    "viewWork": "View my work",
+    "getInTouch": "Get in touch",
+    "like": "Like",
+    "liked": "Liked!",
+    "visits": "{count} visit | {count} visits",
+    "ariaAlreadyLiked": "Already liked",
+    "ariaLikePage": "Like this page",
+    "ariaClickToCopy": "Click to copy link"
+  },
+  "about": {
+    "eyebrow": "About",
+    "title": "A bit about me",
+    "hobbies": "Hobbies : ",
+    "stats": {
+      "curiosity": "Curiosity",
+      "learning": "Learning",
+      "mbti": "MBTI"
+    }
+  },
+  "skills": {
+    "eyebrow": "Skills",
+    "title": "Tools I work with",
+    "subtitle": "Collecting tech stacks like Pokémon.",
+    "ariaProficiency": "{skill} proficiency"
+  },
+  "projects": {
+    "eyebrow": "Projects",
+    "title": "Selected work",
+    "subtitle": "A showcase of projects that reflect my journey from student to software engineer.",
+    "ariaSource": "Source code",
+    "ariaDemo": "Live demo"
+  },
+  "experience": {
+    "eyebrow": "Experience",
+    "title": "Where I've worked"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Let's build something together",
+    "subtitle": "Have a project in mind or just want to say hi? My inbox is always open.",
+    "nameLabel": "Your name",
+    "namePlaceholder": "Jane Doe",
+    "emailLabel": "Email (optional)",
+    "emailPlaceholder": "jane@example.com",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Tell me about your project…",
+    "sending": "Sending…",
+    "send": "Send message",
+    "success": "Thank you! Your message has been saved. I'll get back to you soon.",
+    "error": "Something went wrong. Please try again or email me directly."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Built with Vue 3, TypeScript, Express & PostgreSQL.",
+    "admin": "Admin"
+  },
+  "chatbot": {
+    "title": "Qia's AI Assistant",
+    "subtitle": "Ask me anything!",
+    "ariaOpen": "Open chat",
+    "ariaClose": "Close chat",
+    "ariaCloseBtn": "Close",
+    "ariaSend": "Send",
+    "faqTitle": "Frequently Asked Questions",
+    "placeholder": "Type a message..."
+  },
+  "admin": {
+    "backToPortfolio": "← Back to Portfolio",
+    "portal": "Admin Portal",
+    "username": "Username",
+    "usernamePlaceholder": "Enter username",
+    "password": "Password",
+    "passwordPlaceholder": "Enter password",
+    "signIn": "Sign in",
+    "signingIn": "Signing in…",
+    "loginFailed": "Login failed.",
+    "networkError": "Network error. Is the server running?",
+    "logout": "Logout",
+    "contactMessages": "Contact Messages",
+    "chatbotAvatar": "Chatbot Avatar",
+    "avatarDesc": "This image appears in the chat bubble header. Use a square photo or icon for best results.",
+    "chooseImage": "Choose image",
+    "uploadAvatar": "Upload Avatar",
+    "uploading": "Uploading…",
+    "avatarUpdated": "Avatar updated!",
+    "uploadFailed": "Upload failed",
+    "loading": "Loading…",
+    "loadFailed": "Failed to load contacts.",
+    "noMessages": "No messages yet.",
+    "refresh": "Refresh",
+    "tableHeaders": {
+      "id": "#",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "date": "Date"
+    }
+  },
+  "lang": {
+    "label": "English",
+    "switchTo": "中文"
+  },
+  "content": {
+    "profile": {
+      "tagline": "Powered by curiosity and Ctrl + Z.",
+      "role": "Software Engineer Freshgraduate",
+      "summary": "I'm a Software Engineering graduate from Sabah with one dream — to build my career, live, and one day own a home in Kuala Lumpur. I love creating websites, improving existing features, and turning new ideas into real products. Curious by nature, I'm always learning new technologies and excited to contribute to real-world projects that make a meaningful impact."
+    },
+    "aboutStats": {
+      "curiosityValue": "100%",
+      "learningValue": "Never Stops",
+      "mbtiValue": "ENFJ / INFJ"
+    },
+    "project0": {
+      "description": "A full-stack web application for browsing, purchasing, and managing purebred pets. Customers can search pets, book appointments, and purchase pets. Administrators manage pets, appointments, inventory, sales reports, and riders through a comprehensive dashboard. The system also integrates AI-powered pet breed recognition using a ResNet50 deep learning model."
+    },
+    "project1": {
+      "description": "A personal introduction website to showcase my skills and projects."
+    },
+    "experience0": {
+      "description": "Worked on the Flextoken AI platform by developing frontend and backend features, improving user interfaces, integrating APIs, designing system architecture diagrams, writing technical documentation, and assisting with Docker-based deployment and testing."
+    }
+  }
+}

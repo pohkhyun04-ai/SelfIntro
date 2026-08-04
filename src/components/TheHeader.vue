@@ -2,8 +2,11 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { navLinks, profile } from '@/data/portfolio'
 import { useTheme } from '@/composables/useTheme'
+import { useI18n } from 'vue-i18n'
+import { setLocale } from '@/i18n'
 import AppIcon from './AppIcon.vue'
 
+const { t, locale } = useI18n()
 const { theme, toggleTheme } = useTheme()
 
 const isScrolled = ref(false)
@@ -15,6 +18,10 @@ function handleScroll(): void {
 
 function closeMenu(): void {
   isMenuOpen.value = false
+}
+
+function toggleLang(): void {
+  setLocale(locale.value === 'en' ? 'zh' : 'en')
 }
 
 onMounted(() => {
@@ -43,11 +50,21 @@ onBeforeUnmount(() => {
           class="header__link"
           @click="closeMenu"
         >
-          {{ link.label }}
+          {{ t(`nav.${link.i18nKey}`) }}
         </a>
       </nav>
 
       <div class="header__actions">
+        <!-- Language toggle -->
+        <button
+          class="header__icon-btn header__lang-btn"
+          type="button"
+          :aria-label="t('lang.switchTo')"
+          @click="toggleLang"
+        >
+          {{ t('lang.label') }}
+        </button>
+
         <button
           class="header__icon-btn"
           type="button"
@@ -172,6 +189,15 @@ export default {
 .header__icon-btn:hover {
   color: var(--color-primary);
   border-color: var(--color-primary);
+}
+
+.header__lang-btn {
+  width: auto;
+  padding: 0 var(--space-3);
+  font-family: inherit;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
 }
 
 .header__menu-toggle {

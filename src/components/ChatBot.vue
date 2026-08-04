@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref, nextTick, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 // ---- types ----
 interface ChatMessage {
@@ -95,7 +98,7 @@ watch(messages, () => {
   <!-- ========== Floating chat bubble / panel ========== -->
   <div class="chatbot" :class="{ 'chatbot--open': isOpen }">
     <!-- Toggle button -->
-    <button class="chatbot__toggle" :aria-label="isOpen ? 'Close chat' : 'Open chat'" @click="toggleChat">
+    <button class="chatbot__toggle" :aria-label="isOpen ? t('chatbot.ariaClose') : t('chatbot.ariaOpen')" @click="toggleChat">
       <!-- Chat icon -->
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round">
@@ -134,11 +137,11 @@ watch(messages, () => {
               </svg>
             </div>
             <div>
-              <p class="chatbot__title">Qia's AI Assistant</p>
-              <p class="chatbot__subtitle">Ask me anything!</p>
+              <p class="chatbot__title">{{ t('chatbot.title') }}</p>
+              <p class="chatbot__subtitle">{{ t('chatbot.subtitle') }}</p>
             </div>
           </div>
-          <button class="chatbot__close-btn" @click="isOpen = false" aria-label="Close">
+          <button class="chatbot__close-btn" @click="isOpen = false" :aria-label="t('chatbot.ariaCloseBtn')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
               <line x1="18" y1="6" x2="6" y2="18" />
@@ -151,7 +154,7 @@ watch(messages, () => {
         <div ref="chatBody" class="chatbot__body">
           <!-- FAQ quick-questions (shown when no messages) -->
           <div v-if="messages.length === 0" class="chatbot__faq">
-            <p class="chatbot__faq-title">Frequently Asked Questions</p>
+            <p class="chatbot__faq-title">{{ t('chatbot.faqTitle') }}</p>
             <button v-for="q in faqQuestions" :key="q" class="chatbot__faq-btn" @click="sendMessage(q)">
               {{ q }}
             </button>
@@ -176,9 +179,9 @@ watch(messages, () => {
 
         <!-- Input area -->
         <div class="chatbot__input-area">
-          <input v-model="input" class="chatbot__input" type="text" placeholder="Type a message..." :disabled="loading"
+          <input v-model="input" class="chatbot__input" type="text" :placeholder="t('chatbot.placeholder')" :disabled="loading"
             @keydown="handleKeydown" />
-          <button class="chatbot__send" :disabled="!input.trim() || loading" @click="sendMessage()" aria-label="Send">
+          <button class="chatbot__send" :disabled="!input.trim() || loading" @click="sendMessage()" :aria-label="t('chatbot.ariaSend')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
               <line x1="22" y1="2" x2="11" y2="13" />

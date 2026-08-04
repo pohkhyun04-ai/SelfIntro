@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { profile, socials } from '@/data/portfolio'
+import { useI18n } from 'vue-i18n'
 import AppIcon from './AppIcon.vue'
+
+const { t } = useI18n()
 
 const likes = ref(0)
 const visits = ref(0)
@@ -68,25 +71,25 @@ onMounted(() => {
     <div class="container hero__inner">
       <p class="hero__status fade-in" v-if="profile.available">
         <span class="hero__status-dot"></span>
-        Available for new opportunities
+        {{ t('hero.available') }}
       </p>
 
       <h1 class="hero__title fade-in" style="animation-delay: 0.05s">
-        Hi, I'm <span class="text-gradient">{{ profile.name }}</span>.
+        {{ t('hero.greeting', { name: profile.name }) }}
         <br />
-        I'm a {{ profile.role }}.
+        {{ t('hero.role', { role: t('content.profile.role') }) }}
       </h1>
 
       <p class="hero__tagline fade-in" style="animation-delay: 0.1s">
-        {{ profile.tagline }}
+        {{ t('content.profile.tagline') }}
       </p>
 
       <div class="hero__actions fade-in" style="animation-delay: 0.15s">
         <a href="#projects" class="btn btn--primary">
-          View my work
+          {{ t('hero.viewWork') }}
           <AppIcon name="arrow-down" :size="18" />
         </a>
-        <a href="#contact" class="btn btn--ghost">Get in touch</a>
+        <a href="#contact" class="btn btn--ghost">{{ t('hero.getInTouch') }}</a>
       </div>
 
       <ul class="hero__socials fade-in" style="animation-delay: 0.2s">
@@ -100,15 +103,15 @@ onMounted(() => {
 
       <div class="hero__stats fade-in" style="animation-delay: 0.25s">
         <button class="hero__like-btn" :class="{ 'hero__like-btn--liked': liked }" :disabled="liked" @click="likePage"
-          :aria-label="liked ? 'Already liked' : 'Like this page'">
+          :aria-label="liked ? t('hero.ariaAlreadyLiked') : t('hero.ariaLikePage')">
           <AppIcon :name="liked ? 'heart-filled' : 'heart'" :size="20" />
           <span class="hero__like-count">{{ likes }}</span>
-          <span class="hero__like-label">{{ liked ? 'Liked!' : 'Like' }}</span>
+          <span class="hero__like-label">{{ liked ? t('hero.liked') : t('hero.like') }}</span>
         </button>
         <p class="hero__visit-count" :class="{ 'hero_visit-count--copied': copied }" @click="copyLink" role="button"
-          tabindex="0" title="Click to copy link">
+          tabindex="0" :title="t('hero.ariaClickToCopy')">
           <AppIcon name="external" :size="14" />
-          <span>{{ visits }} visit{{ visits !== 1 ? 's' : '' }}</span>
+          <span>{{ t('hero.visits', { count: visits }) }}</span>
         </p>
       </div>
     </div>
@@ -233,17 +236,9 @@ onMounted(() => {
 }
 
 @keyframes heartPop {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.15);
-  }
-
-  100% {
-    transform: scale(1);
-  }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
 
 .hero__like-count {

@@ -1,15 +1,26 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { experience } from '@/data/portfolio'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
+const translatedExperience = computed(() =>
+  experience.map((item, i) => ({
+    ...item,
+    description: t(`content.experience${i}.description`),
+  }))
+)
 </script>
 
 <template>
   <section id="experience" class="section experience">
     <div class="container">
-      <span class="section__eyebrow">Experience</span>
-      <h2 class="section__title">Where I've worked</h2>
+      <span class="section__eyebrow">{{ t('experience.eyebrow') }}</span>
+      <h2 class="section__title">{{ t('experience.title') }}</h2>
 
       <ol class="timeline">
-        <li v-for="(item, index) in experience" :key="index" class="timeline__item">
+        <li v-for="(item, index) in translatedExperience" :key="index" class="timeline__item">
           <div class="timeline__dot" aria-hidden="true"></div>
           <div class="timeline__content">
             <div class="timeline__head">

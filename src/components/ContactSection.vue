@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { profile, socials } from '@/data/portfolio'
+import { useI18n } from 'vue-i18n'
 import AppIcon from './AppIcon.vue'
+
+const { t } = useI18n()
 
 const name = ref('')
 const email = ref('')
@@ -39,43 +42,43 @@ async function handleSubmit(): Promise<void> {
   <section id="contact" class="section">
     <div class="container contact">
       <div class="contact__panel">
-        <span class="section__eyebrow">Contact</span>
-        <h2 class="section__title">Let's build something together</h2>
+        <span class="section__eyebrow">{{ t('contact.eyebrow') }}</span>
+        <h2 class="section__title">{{ t('contact.title') }}</h2>
         <p class="section__subtitle">
-          Have a project in mind or just want to say hi? My inbox is always open.
+          {{ t('contact.subtitle') }}
         </p>
 
         <form class="contact__form" @submit.prevent="handleSubmit">
           <label class="contact__field">
-            <span class="contact__label">Your name</span>
+            <span class="contact__label">{{ t('contact.nameLabel') }}</span>
             <input
               v-model="name"
               type="text"
               class="contact__input"
-              placeholder="Jane Doe"
+              :placeholder="t('contact.namePlaceholder')"
               required
               :disabled="status === 'sending'"
             />
           </label>
 
           <label class="contact__field">
-            <span class="contact__label">Email (optional)</span>
+            <span class="contact__label">{{ t('contact.emailLabel') }}</span>
             <input
               v-model="email"
               type="email"
               class="contact__input"
-              placeholder="jane@example.com"
+              :placeholder="t('contact.emailPlaceholder')"
               :disabled="status === 'sending'"
             />
           </label>
 
           <label class="contact__field">
-            <span class="contact__label">Message</span>
+            <span class="contact__label">{{ t('contact.messageLabel') }}</span>
             <textarea
               v-model="message"
               class="contact__input contact__textarea"
               rows="4"
-              placeholder="Tell me about your project…"
+              :placeholder="t('contact.messagePlaceholder')"
               required
               :disabled="status === 'sending'"
             ></textarea>
@@ -86,17 +89,17 @@ async function handleSubmit(): Promise<void> {
             class="btn btn--primary contact__submit"
             :disabled="status === 'sending'"
           >
-            <template v-if="status === 'sending'">Sending…</template>
-            <template v-else>Send message</template>
+            <template v-if="status === 'sending'">{{ t('contact.sending') }}</template>
+            <template v-else>{{ t('contact.send') }}</template>
             <AppIcon name="mail" :size="18" />
           </button>
 
           <p v-if="status === 'sent'" class="contact__note contact__note--ok">
-            Thank you! Your message has been saved. I'll get back to you soon.
+            {{ t('contact.success') }}
           </p>
 
           <p v-if="status === 'error'" class="contact__note contact__note--err">
-            Something went wrong. Please try again or email me directly.
+            {{ t('contact.error') }}
           </p>
         </form>
       </div>

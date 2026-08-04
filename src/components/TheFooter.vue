@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { profile, navLinks, socials } from '@/data/portfolio'
 import { useAdmin } from '@/composables/useAdmin'
+import { useI18n } from 'vue-i18n'
 import AppIcon from './AppIcon.vue'
 
+const { t } = useI18n()
 const { openAdmin } = useAdmin()
 const year = new Date().getFullYear()
 </script>
@@ -17,7 +19,7 @@ const year = new Date().getFullYear()
 
       <nav class="footer__nav" aria-label="Footer">
         <a v-for="link in navLinks" :key="link.href" :href="link.href" class="footer__link">
-          {{ link.label }}
+          {{ t(`nav.${link.i18nKey}`) }}
         </a>
       </nav>
 
@@ -37,9 +39,9 @@ const year = new Date().getFullYear()
     </div>
 
     <div class="container footer__bottom">
-      <p>© {{ year }} {{ profile.name }}. All rights reserved.</p>
-      <p>Built with Vue 3, TypeScript & CSS.</p>
-      <button class="footer__admin-link" @click="openAdmin">Admin</button>
+      <p>© {{ year }} {{ profile.name }}. {{ t('footer.rights') }}</p>
+      <p>{{ t('footer.builtWith') }}</p>
+      <button class="footer__admin-link" @click="openAdmin">{{ t('footer.admin') }}</button>
     </div>
   </footer>
 </template>

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useAdmin } from "@/composables/useAdmin";
+import { useI18n } from "vue-i18n";
 import AppIcon from "./AppIcon.vue";
 
+const { t } = useI18n();
 const { token, logout } = useAdmin();
 
 interface Contact {
@@ -33,7 +35,7 @@ async function fetchContacts(): Promise<void> {
 
     contacts.value = await res.json();
   } catch {
-    error.value = "Failed to load contacts.";
+    error.value = t('admin.loadFailed');
   } finally {
     loading.value = false;
   }
@@ -86,12 +88,12 @@ async function uploadAvatar() {
       body: form,
     })
     const data = await res.json()
-    if (!res.ok) throw new Error(data.error ?? "Upload failed")
-    avatarMsg.value = "Avatar updated!"
+    if (!res.ok) throw new Error(data.error ?? t('admin.uploadFailed'))
+    avatarMsg.value = t('admin.avatarUpdated')
     avatarFile.value = null
     fetchAvatarPreview()
   } catch (err: any) {
-    avatarMsg.value = err.message ?? "Upload failed"
+    avatarMsg.value = err.message ?? t('admin.uploadFailed')
   } finally {
     avatarUploading.value = false
   }
@@ -103,19 +105,19 @@ async function uploadAvatar() {
     <header class="dashboard__header">
       <h2 class="dashboard__title">
         <AppIcon name="mail" :size="22" />
-        Contact Messages ({{ contacts.length }})
+        {{ t('admin.contactMessages') }} ({{ contacts.length }})
       </h2>
-      <button class="btn btn--ghost" @click="logout">Logout</button>
+      <button class="btn btn--ghost" @click="logout">{{ t('admin.logout') }}</button>
     </header>
 
     <!-- Avatar upload -->
     <section class="dashboard__avatar-section">
       <h3 class="dashboard__section-title">
         <AppIcon name="mail" :size="18" />
-        Chatbot Avatar
+        {{ t('admin.chatbotAvatar') }}
       </h3>
       <p class="dashboard__avatar-desc">
-        This image appears in the chat bubble header. Use a square photo or icon for best results.
+        {{ t('admin.avatarDesc') }}
       </p>
       <div class="dashboard__avatar-row">
         <div class="dashboard__avatar-preview-wrap">
@@ -139,7 +141,7 @@ async function uploadAvatar() {
               <polyline points="17 8 12 3 7 8" />
               <line x1="12" y1="3" x2="12" y2="15" />
             </svg>
-            {{ avatarFile ? avatarFile.name : "Choose image" }}
+            {{ avatarFile ? avatarFile.name : t('admin.chooseImage') }}
             <input
               type="file"
               accept="image/*"
@@ -157,30 +159,30 @@ async function uploadAvatar() {
               <circle cx="12" cy="12" r="10" stroke-opacity="0.25" />
               <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round" />
             </svg>
-            {{ avatarUploading ? "Uploading…" : "Upload Avatar" }}
+            {{ avatarUploading ? t('admin.uploading') : t('admin.uploadAvatar') }}
           </button>
         </div>
       </div>
       <p v-if="avatarMsg" class="dashboard__avatar-msg" :class="{ 'dashboard__avatar-msg--err': avatarMsg.toLowerCase().includes('fail') || avatarMsg.toLowerCase().includes('error') }">{{ avatarMsg }}</p>
     </section>
 
-    <p v-if="loading" class="dashboard__status">Loading…</p>
+    <p v-if="loading" class="dashboard__status">{{ t('admin.loading') }}</p>
     <p v-if="error" class="dashboard__status dashboard__status--err">{{ error }}</p>
 
     <div v-if="!loading && contacts.length === 0 && !error" class="dashboard__empty">
       <AppIcon name="mail" :size="40" />
-      <p>No messages yet.</p>
+      <p>{{ t('admin.noMessages') }}</p>
     </div>
 
     <div v-if="contacts.length > 0" class="dashboard__table-wrapper">
       <table class="dashboard__table">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Message</th>
-            <th>Date</th>
+            <th>{{ t('admin.tableHeaders.id') }}</th>
+            <th>{{ t('admin.tableHeaders.name') }}</th>
+            <th>{{ t('admin.tableHeaders.email') }}</th>
+            <th>{{ t('admin.tableHeaders.message') }}</th>
+            <th>{{ t('admin.tableHeaders.date') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -196,7 +198,7 @@ async function uploadAvatar() {
     </div>
 
     <button class="btn btn--primary dashboard__refresh" @click="fetchContacts">
-      Refresh
+      {{ t('admin.refresh') }}
     </button>
   </div>
 </template>

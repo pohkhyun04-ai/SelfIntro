@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { profile } from '@/data/portfolio'
+import { useI18n } from 'vue-i18n'
 import AppIcon from './AppIcon.vue'
 
+const { t } = useI18n()
+
 const stats = [
-  { label: 'Curiosity', value: '100%' },
-  { label: 'Learning', value: 'Never Stops' },
-  { label: 'MBTI', value: 'ENFJ / INFJ' },
+  { label: t('about.stats.curiosity'), value: t('content.aboutStats.curiosityValue') },
+  { label: t('about.stats.learning'), value: t('content.aboutStats.learningValue') },
+  { label: t('about.stats.mbti'), value: t('content.aboutStats.mbtiValue') },
 ]
 </script>
 
@@ -13,9 +16,9 @@ const stats = [
   <section id="about" class="section">
     <div class="container about">
       <div class="about__text">
-        <span class="section__eyebrow">About</span>
-        <h2 class="section__title">A bit about me</h2>
-        <p class="about__summary">{{ profile.summary }}</p>
+        <span class="section__eyebrow">{{ t('about.eyebrow') }}</span>
+        <h2 class="section__title">{{ t('about.title') }}</h2>
+        <p class="about__summary">{{ t('content.profile.summary') }}</p>
         <p class="about__meta">
           <AppIcon name="map-pin" :size="16" />
           {{ profile.location }}
@@ -25,7 +28,7 @@ const stats = [
           {{ profile.school }}
         </p> <br/>
         <p class="about__meta">
-          <b>Hobbies : </b>
+          <b>{{ t('about.hobbies') }}</b>
           {{ profile.hobbies.join(', ') }}
         </p>
       </div>  
