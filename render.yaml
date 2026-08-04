@@ -9,9 +9,9 @@ services:
     region: singapore                    # closest to Malaysia
     plan: free
     buildCommand: |
-      npm install
+      npm install --include=dev
       npx vite build
-      cd server && npm install && npm run build
+      cd server && npm install --include=dev && npm run build
     startCommand: cd server && npm start
     envVars:
       - key: NODE_ENV
