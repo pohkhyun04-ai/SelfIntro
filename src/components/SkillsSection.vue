@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { skills } from '@/data/portfolio'
+import AppIcon from './AppIcon.vue'
 </script>
 
 <template>
@@ -8,8 +9,7 @@ import { skills } from '@/data/portfolio'
       <span class="section__eyebrow">Skills</span>
       <h2 class="section__title">Tools I work with</h2>
       <p class="section__subtitle">
-        A snapshot of the technologies I reach for most often, refined over years of
-        shipping production software.
+        Collecting tech stacks like Pokémon.
       </p>
 
       <div class="skills__grid">

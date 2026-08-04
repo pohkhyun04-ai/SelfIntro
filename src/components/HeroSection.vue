@@ -1,6 +1,65 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { profile, socials } from '@/data/portfolio'
 import AppIcon from './AppIcon.vue'
+
+const likes = ref(0)
+const visits = ref(0)
+const liked = ref(false)
+const API = import.meta.env.VITE_API_URL || ''
+
+const copied = ref(false)
+
+async function copyLink() {
+  try {
+    await navigator.clipboard.writeText(window.location.href)
+    copied.value = true
+    setTimeout(() => { copied.value = false }, 2000)
+  } catch { /* clipboard not supported */ }
+}
+
+async function fetchStats() {
+  try {
+    const res = await fetch(`${API}/api/stats`)
+    if (res.ok) {
+      const data = await res.json()
+      likes.value = data.likes
+      visits.value = data.visits
+      liked.value = data.hasLiked
+    }
+  } catch { /* ignore */ }
+}
+
+async function recordVisit() {
+  try {
+    const res = await fetch(`${API}/api/visit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ page: '/' }),
+    })
+    if (res.ok) {
+      const data = await res.json()
+      visits.value = data.visits
+    }
+  } catch { /* ignore */ }
+}
+
+async function likePage() {
+  if (liked.value) return
+  try {
+    const res = await fetch(`${API}/api/like`, { method: 'POST' })
+    if (res.ok) {
+      const data = await res.json()
+      likes.value = data.likes
+      liked.value = true
+    }
+  } catch { /* ignore */ }
+}
+
+onMounted(() => {
+  fetchStats()
+  recordVisit()
+})
 </script>
 
 <template>
@@ -32,17 +91,26 @@ import AppIcon from './AppIcon.vue'
 
       <ul class="hero__socials fade-in" style="animation-delay: 0.2s">
         <li v-for="social in socials" :key="social.label">
-          <a
-            :href="social.href"
-            class="hero__social-link"
-            target="_blank"
-            rel="noopener noreferrer"
-            :aria-label="social.label"
-          >
+          <a :href="social.href" class="hero__social-link" target="_blank" rel="noopener noreferrer"
+            :aria-label="social.label">
             <AppIcon :name="social.icon" :size="20" />
           </a>
         </li>
       </ul>
+
+      <div class="hero__stats fade-in" style="animation-delay: 0.25s">
+        <button class="hero__like-btn" :class="{ 'hero__like-btn--liked': liked }" :disabled="liked" @click="likePage"
+          :aria-label="liked ? 'Already liked' : 'Like this page'">
+          <AppIcon :name="liked ? 'heart-filled' : 'heart'" :size="20" />
+          <span class="hero__like-count">{{ likes }}</span>
+          <span class="hero__like-label">{{ liked ? 'Liked!' : 'Like' }}</span>
+        </button>
+        <p class="hero__visit-count" :class="{ 'hero_visit-count--copied': copied }" @click="copyLink" role="button"
+          tabindex="0" title="Click to copy link">
+          <AppIcon name="external" :size="14" />
+          <span>{{ visits }} visit{{ visits !== 1 ? 's' : '' }}</span>
+        </p>
+      </div>
     </div>
   </section>
 </template>
@@ -64,11 +132,9 @@ import AppIcon from './AppIcon.vue'
   transform: translateX(-50%);
   width: 60rem;
   height: 40rem;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(99, 102, 241, 0.18),
-    transparent 70%
-  );
+  background: radial-gradient(ellipse at center,
+      rgba(99, 102, 241, 0.18),
+      transparent 70%);
   pointer-events: none;
 }
 
@@ -125,6 +191,94 @@ import AppIcon from './AppIcon.vue'
 .hero__socials {
   display: flex;
   gap: var(--space-3);
+}
+
+.hero__stats {
+  margin-top: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.hero__like-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: var(--space-3) var(--space-5);
+  color: var(--color-text-muted);
+  font-family: inherit;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.hero__like-btn:hover:not(:disabled) {
+  color: #e74c3c;
+  border-color: #e74c3c;
+  transform: scale(1.06);
+  box-shadow: 0 0 24px rgba(231, 76, 60, 0.15);
+}
+
+.hero__like-btn--liked {
+  color: #e74c3c;
+  border-color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.06);
+  cursor: default;
+  animation: heartPop 0.4s ease;
+}
+
+@keyframes heartPop {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.hero__like-count {
+  font-size: var(--fs-xl);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero__like-label {
+  font-size: var(--fs-sm);
+  opacity: 0.8;
+}
+
+.hero__visit-count {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+  opacity: 0.6;
+  cursor: pointer;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  transition: opacity var(--transition-fast), color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.hero__visit-count:hover {
+  opacity: 1;
+  color: var(--color-primary);
+  background-color: var(--color-surface);
+}
+
+.hero__visit-count--copied {
+  opacity: 1;
+  color: var(--color-success);
 }
 
 .hero__social-link {

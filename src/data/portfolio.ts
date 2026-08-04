@@ -41,21 +41,28 @@ export interface PortfolioProfile {
   tagline: string;
   location: string;
   email: string;
+  school: string;
+  languages: string[];
+  hobbies: string[];
   available: boolean;
   summary: string;
 }
 
 export const profile: PortfolioProfile = {
   name: "Qia Chung",
-  role: "Software Engineer",
-  tagline: "I build fast, accessible, and delightful web experiences.",
+  role: "Software Engineer Freshgraduate",
+  tagline: "Powered by curiosity and Ctrl + Z.",
   location: "Cheras, Kuala Lumpur",
   email: "chungpohkhyun1234@gmail.com",
+  school: "Tunku Abdul Rahman University of Management and Technology (KL Branch)",
+  languages: ["Mandarin", "English", "Malay"],
+  hobbies: ["Cooking", "Traveling", "UI/UX Design"],
   available: true,
-  summary:
-    "I am a software engineer with a passion for crafting clean, user-centric products. " +
-    "Over the past 6 years I have worked across the stack — from pixel-perfect interfaces to " +
-    "scalable backend systems — always with a focus on performance and developer experience.",
+summary:
+  "I'm a Software Engineering graduate from Sabah with one dream — to build my career, live, and one day own a home in Kuala Lumpur. " +
+  "I love creating websites, improving existing features, and turning new ideas into real products. " + 
+  "Curious by nature, I'm always learning new technologies and excited to contribute to real-world projects that make a meaningful impact. " 
+  ,
 };
 
 export const navLinks: NavLink[] = [
@@ -124,6 +131,6 @@ export const experience: ExperienceItem[] = [
     company: "Flexinfra AI Sdn Bhd",
     period: "15 June - 29 November 2026",
     description:
-      "Lead the frontend platform team, shipping a design system adopted across 8 product teams.",
+      "Worked on the Flextoken AI platform by developing frontend and backend features, improving user interfaces, integrating APIs, designing system architecture diagrams, writing technical documentation, and assisting with Docker-based deployment and testing.",
   }
 ];

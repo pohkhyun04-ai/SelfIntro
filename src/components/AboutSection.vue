@@ -3,9 +3,9 @@ import { profile } from '@/data/portfolio'
 import AppIcon from './AppIcon.vue'
 
 const stats = [
-  { label: 'Years experience', value: '6+' },
-  { label: 'Projects shipped', value: '40+' },
-  { label: 'Open-source stars', value: '3k+' },
+  { label: 'Curiosity', value: '100%' },
+  { label: 'Learning', value: 'Never Stops' },
+  { label: 'MBTI', value: 'ENFJ / INFJ' },
 ]
 </script>
 
@@ -19,8 +19,16 @@ const stats = [
         <p class="about__meta">
           <AppIcon name="map-pin" :size="16" />
           {{ profile.location }}
+        </p> <br/>
+        <p class="about__meta">
+          <AppIcon name="graduation-cap" :size="16" />
+          {{ profile.school }}
+        </p> <br/>
+        <p class="about__meta">
+          <b>Hobbies : </b>
+          {{ profile.hobbies.join(', ') }}
         </p>
-      </div>
+      </div>  
 
       <aside class="about__stats">
         <div v-for="stat in stats" :key="stat.label" class="about__stat">

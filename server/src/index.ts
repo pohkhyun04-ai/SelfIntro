@@ -9,6 +9,7 @@ import authRouter from "./routes/auth.js";
 import contactsRouter from "./routes/contacts.js";
 import chatRouter from "./routes/chat.js";
 import assetsRouter from "./routes/assets.js";
+import statsRouter from "./routes/stats.js";
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use("/api", contactRouter);   // POST /api/contact  (public)
 app.use("/api", authRouter);      // POST /api/login    (public)
 app.use("/api", chatRouter);      // POST /api/chat     (public, Gemini FAQ)
 app.use("/api", assetsRouter);    // POST /api/assets/avatar (protected), GET /api/avatar (public)
+app.use("/api", statsRouter);     // POST /api/like, POST /api/visit, GET /api/stats (public)
 
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok" });

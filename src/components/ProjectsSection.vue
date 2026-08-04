@@ -9,39 +9,22 @@ import AppIcon from './AppIcon.vue'
       <span class="section__eyebrow">Projects</span>
       <h2 class="section__title">Selected work</h2>
       <p class="section__subtitle">
-        A few things I've built recently. Each one taught me something new about
-        building for real users at scale.
+        A showcase of projects that reflect my journey from student to software engineer.
       </p>
 
       <div class="projects__grid">
-        <article
-          v-for="project in projects"
-          :key="project.title"
-          class="project-card"
-        >
+        <article v-for="project in projects" :key="project.title" class="project-card">
           <div class="project-card__top">
             <span class="project-card__icon">
               <AppIcon name="code" :size="20" />
             </span>
             <div class="project-card__links">
-              <a
-                v-if="project.repo"
-                :href="project.repo"
-                class="project-card__link"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Source code"
-              >
+              <a v-if="project.repo" :href="project.repo" class="project-card__link" target="_blank"
+                rel="noopener noreferrer" aria-label="Source code">
                 <AppIcon name="github" :size="18" />
               </a>
-              <a
-                v-if="project.link"
-                :href="project.link"
-                class="project-card__link"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Live demo"
-              >
+              <a v-if="project.link" :href="project.link" class="project-card__link" target="_blank"
+                rel="noopener noreferrer" aria-label="Live demo">
                 <AppIcon name="external" :size="18" />
               </a>
             </div>
